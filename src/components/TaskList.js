@@ -1,31 +1,68 @@
 import React, { Component } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
-import { ListGroup, ListGroupItem } from 'react-bootstrap';
-import { Glyphicon } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 import Task from '../components/Task'
 
+const API = 'http://localhost:8080/api/tasks';
+
 class TaskList extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      tasks: [],
+      isLoading: false,
+      error: null
+    }
+  }
+  
+  componentWillMount(){
+    this.setState({isLoading: true});
+    fetch(API, {method: 'get'})
+      .then(response => {
+        if(response.ok){
+          return response.json();
+        }else{
+          throw new Error('Erro ao conectar com o servidor ...');
+        }
+      })
+      .then(data => this.setState({tasks:data, isLoading: false}))
+      .catch(error => this.setState({error:error, isLoading: false}))
+  }
+
   render() {
-     return (
+    const {tasks, isLoading, error } = this.state;
+    
+    if(error){
+      return <p>{error.message}</p>
+    }
+
+    if(isLoading){
+      return <p>Loading...</p>
+    }
+    
+    return (
       <Tabs defaultActiveKey={1} animation={false} id="noanim-tab-example"> 
         <Tab eventKey={1} title="Todos">
           <ListGroup>
-          <Task state={1} content="COMPLETAR DESAFIO"/>
-          <Task state={0} content="PENSAR E ANALIZAR"/>
-          <Task state={0} content="ESTADO DA ARTE"/>
-          <Task state={0} content="PESQUISAR"/>
+            {tasks.map(task => <Task status={task.status} content={task.content}/>)}
           </ListGroup> 
         </Tab>
         <Tab eventKey={2} title="Pendentes">
           <ListGroup>
-          <Task state={0} content="PENSAR E ANALIZAR"/>
-          <Task state={0} content="ESTADO DA ARTE"/>
-          <Task state={0} content="PESQUISAR"/>
+            {tasks.map(task => 
+              {if(!task.status)
+                 return <Task status={2} content={task.content}/>
+              }
+            )}
           </ListGroup> 
         </Tab>
         <Tab eventKey={3} title="Feitos">
           <ListGroup>
-          <Task state={1} content="COMPLETAR DESAFIO"/>
+            {tasks.map(task => 
+              {if(task.status)
+                 return <Task status={2} content={task.content}/>
+              }
+            )}
           </ListGroup> 
         </Tab>
       </Tabs>
