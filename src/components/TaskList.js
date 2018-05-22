@@ -15,7 +15,7 @@ class TaskList extends Component {
     }
   }
   
-  componentWillMount(){
+  componentDidMount(){
     this.setState({isLoading: true});
     fetch(API, {method: 'get'})
       .then(response => {
@@ -25,8 +25,8 @@ class TaskList extends Component {
           throw new Error('Erro ao conectar com o servidor ...');
         }
       })
-      .then(data => this.setState({tasks:data, isLoading: false}))
-      .catch(error => this.setState({error:error, isLoading: false}))
+      .then(data => {this.setState({tasks: data.reverse(), isLoading: false})})
+      .catch(error => this.setState({error: error, isLoading: false}))
   }
 
   render() {
@@ -44,14 +44,14 @@ class TaskList extends Component {
       <Tabs defaultActiveKey={1} animation={false} id="noanim-tab-example"> 
         <Tab eventKey={1} title="Todos">
           <ListGroup>
-            {tasks.map(task => <Task status={task.status} content={task.content}/>)}
+            {tasks.map(task => <Task status={task.status} key={task.id} content={task.content}/>)}
           </ListGroup> 
         </Tab>
         <Tab eventKey={2} title="Pendentes">
           <ListGroup>
             {tasks.map(task => 
               {if(!task.status)
-                 return <Task status={2} content={task.content}/>
+                 return <Task status={2} key={task.id} content={task.content}/>
               }
             )}
           </ListGroup> 
@@ -60,7 +60,7 @@ class TaskList extends Component {
           <ListGroup>
             {tasks.map(task => 
               {if(task.status)
-                 return <Task status={2} content={task.content}/>
+                 return <Task status={2} key={task.id} content={task.content}/>
               }
             )}
           </ListGroup> 
