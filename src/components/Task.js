@@ -38,6 +38,7 @@ class Task extends Component {
         st = "success"; break;
       case 2:
         st = "info"; break
+      default:break;
     }
     return(
       <ListGroupItem bsStyle={st}>{this.props.content}

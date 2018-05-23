@@ -37,7 +37,7 @@ class View extends Component {
       this.setState({tasks: new_list});
     })
 	}
-
+  
   fetchDataApi(){
     this.setState({isLoading: true});
     fetch(API, {method: 'get'})

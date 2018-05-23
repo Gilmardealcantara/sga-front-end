@@ -29,6 +29,7 @@ class TaskList extends Component {
             {tasks.map(task => 
               {if(!task.status)
                  return <Task status={2} key={task.id} content={task.content}/>
+                return null
               }
             )}
           </ListGroup> 
@@ -38,6 +39,7 @@ class TaskList extends Component {
             {tasks.map(task => 
               {if(task.status)
                  return <Task status={2} key={task.id} content={task.content}/>
+                return null
               }
             )}
           </ListGroup> 

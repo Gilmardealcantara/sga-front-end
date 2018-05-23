@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, FormControl } from 'react-bootstrap';
-import { ControlLabel, HelpBlock } from 'react-bootstrap';
-import swal from 'sweetalert';
-
-const API = 'http://localhost:8080/api/tasks';
+import { FormGroup, FormControl } from 'react-bootstrap';
+import { ControlLabel} from 'react-bootstrap';
 
 class Header extends Component {
   
