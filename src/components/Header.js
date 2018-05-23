@@ -18,20 +18,9 @@ class Header extends Component {
     }
   }
 	
-	addTask(){
-    
+	addTask(){    
 		if(this.state.new_task === '') return;
-
-    console.log(this.state.new_task)
-    fetch(API, {
-			method: 'post',
-			headers: {'Content-Type': 'application/json'},
-		 	body: JSON.stringify({content:this.state.new_task, status:0})
-		})
-		.then(response => { 
-      if(!response.ok)
-					swal("Tarefa não adicionada! Erro no servidor!", {icon: "warning"});
-    })
+    this.props.send(this.state.new_task); 
 		this.setState({ new_task: '' });
 	}
 

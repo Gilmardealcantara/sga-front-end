@@ -3,34 +3,11 @@ import { Tabs, Tab } from 'react-bootstrap';
 import { ListGroup } from 'react-bootstrap';
 import Task from '../components/Task'
 
-const API = 'http://localhost:8080/api/tasks';
 
 class TaskList extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      tasks: [],
-      isLoading: false,
-      error: null
-    }
-  }
   
-  componentDidMount(){
-    this.setState({isLoading: true});
-    fetch(API, {method: 'get'})
-      .then(response => {
-        if(response.ok){
-          return response.json();
-        }else{
-          throw new Error('Erro ao conectar com o servidor ...');
-        }
-      })
-      .then(data => {this.setState({tasks: data.reverse(), isLoading: false})})
-      .catch(error => this.setState({error: error, isLoading: false}))
-  }
-
   render() {
-    const {tasks, isLoading, error } = this.state;
+    const {tasks, isLoading, error } = this.props.data;
     
     if(error){
       return <p>{error.message}</p>
