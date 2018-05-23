@@ -11,6 +11,7 @@ class View extends Component {
   constructor(props){
     super(props);
     this.sendDataApi = this.sendDataApi.bind(this);
+    this.deleteDataApi = this.deleteDataApi.bind(this);
     this.state = {
       tasks: [],
       isLoading: false,
@@ -38,6 +39,24 @@ class View extends Component {
     })
 	}
   
+	deleteDataApi(task_id) {
+    fetch(API + '/' + task_id, {
+    	method: 'delete',
+    })
+		.then(response => { 
+      if(response.ok){
+			  return response.url.substr(response.url.lastIndexOf('/') + 1)
+      }else{
+        swal("Tarefa não adicionada! Erro no servidor!", {icon: "warning"});
+      }
+    })
+    .then(id => {
+      let new_list = this.state.tasks;
+      new_list = new_list.filter(function(obj){return obj.id !== Number(id)})
+      this.setState({tasks: new_list});
+    })
+	}
+
   fetchDataApi(){
     this.setState({isLoading: true});
     fetch(API, {method: 'get'})
@@ -68,7 +87,7 @@ class View extends Component {
           </Row>
           <Row>
             <Col md={7} mdOffset={2}>
-              <TaskList data={this.state}/>
+              <TaskList delete={this.deleteDataApi} data={this.state}/>
             </Col>
           </Row>
         </Grid>
