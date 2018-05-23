@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 import { Glyphicon } from 'react-bootstrap';
-
+import Collapsible from 'react-collapsible';
+import image from '../logo.svg';
 
 class Task extends Component {
    
@@ -11,21 +12,27 @@ class Task extends Component {
 
   render(){
     let st = this.props.status;
+    let style_st;
     switch(st){
       case 0:
-        st = "warning"; break
+        style_st = "warning"; break
       case 1:
-        st = "success"; break;
+        style_st = "success"; break;
       case 2:
-        st = "info"; break
+        style_st = "info"; break
       default:break;
     }
     return(
-      <ListGroupItem bsStyle={st}>{this.props.content}
+      <ListGroupItem bsStyle={style_st}>
         <Glyphicon 
           onClick={this.taskClick.bind(this)} 
           glyph="remove" 
           style={{"float":"right"}}/>
+					{st ? (
+            <Collapsible trigger={this.props.content}>
+					    <img src={image} width={240} height={240}/>
+            </Collapsible>) : (this.props.content)
+          }
       </ListGroupItem>
     );
   }
