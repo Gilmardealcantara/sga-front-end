@@ -21,14 +21,20 @@ class TaskList extends Component {
       <Tabs defaultActiveKey={1} animation={false} id="noanim-tab-example"> 
         <Tab eventKey={1} title="Todos">
           <ListGroup>
-            {tasks.map(task => <Task delete={this.props.delete} status={task.status} key={task.id} content={task.content}/>)}
+            {tasks.map(task => 
+              <Task 
+                delete={this.props.delete} 
+                status={task.status}
+								task={task}
+                key={task.id}/>
+             )}
           </ListGroup> 
         </Tab>
         <Tab eventKey={2} title="Pendentes">
           <ListGroup>
             {tasks.map(task => 
               {if(!task.status)
-                 return <Task delete={this.props.delete} status={2} key={task.id} content={task.content}/>
+                 return <Task delete={this.props.delete} status={2} key={task.id} task={task}/>
                 return null
               }
             )}
@@ -38,7 +44,7 @@ class TaskList extends Component {
           <ListGroup>
             {tasks.map(task => 
               {if(task.status)
-                 return <Task delete={this.props.delete} status={2} key={task.id} content={task.content}/>
+                 return <Task delete={this.props.delete} status={2} key={task.id} task={task}/>
                 return null
               }
             )}

@@ -44,7 +44,7 @@ class Header extends Component {
           <FormControl
             type="text"
             value={this.state.new_task}
-            placeholder="Oque precisa ser feito"
+            placeholder="O que precisa ser feito?"
             onChange={this.handleChange}
           />
           <FormControl.Feedback />

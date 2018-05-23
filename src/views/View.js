@@ -38,7 +38,7 @@ class View extends Component {
       this.setState({tasks: new_list});
     })
 	}
-  
+ 
 	deleteDataApi(task_id) {
     fetch(API + '/' + task_id, {
     	method: 'delete',

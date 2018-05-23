@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { ListGroupItem } from 'react-bootstrap';
 import { Glyphicon } from 'react-bootstrap';
 import Collapsible from 'react-collapsible';
-import image from '../logo.svg';
 
 class Task extends Component {
    
@@ -12,6 +11,7 @@ class Task extends Component {
 
   render(){
     let st = this.props.status;
+    let task = this.props.task;
     let style_st;
     switch(st){
       case 0:
@@ -29,9 +29,9 @@ class Task extends Component {
           glyph="remove" 
           style={{"float":"right"}}/>
 					{st ? (
-            <Collapsible trigger={this.props.content}>
-					    <img src={image} width={240} height={240}/>
-            </Collapsible>) : (this.props.content)
+            <Collapsible trigger={task.content}>
+					    <img src={'http://localhost:8080/api/image/' + task.id} width={240} height={240}/>
+            </Collapsible>) : (task.content)
           }
       </ListGroupItem>
     );
